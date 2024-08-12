@@ -2,6 +2,7 @@
 
 namespace App\Interfaces;
 
-interface CurrencyProviderInterface {
+interface CurrencyProviderInterface 
+{
     public function getCurrency ($baseCurrency);
 }

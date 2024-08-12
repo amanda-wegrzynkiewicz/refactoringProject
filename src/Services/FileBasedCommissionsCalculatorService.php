@@ -35,9 +35,11 @@ class FileBasedCommissionsCalculatorService
     {
         foreach ($this->fileReader->getLines() as $row) {
             $paymentData = json_decode($row);
+
             if (!isset($paymentData->bin)) {
                 throw new \Exception("There is no bin value in file!");
             }
+
             $commissionAmountSummary = $this->paymentConvertionService->calculateTotalCommission($paymentData);
             echo "The commission for bin { $paymentData->bin } is: { $commissionAmountSummary }\n";
         }
