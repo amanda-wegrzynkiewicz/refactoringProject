@@ -11,7 +11,7 @@ use App\Services\PaymentConversionService;
 
 class PaymentConversionServiceTest extends TestCase
 {
-    public function testXCalculatesAmountForEuropeanPaymentInEuroCurrency()
+    public function testCalculatesAmountForEuropeanPaymentInEuroCurrency()
     {
         $paymentData = (object)[
             'bin' => '45717360',
@@ -36,17 +36,17 @@ class PaymentConversionServiceTest extends TestCase
             ->with('EUR')
             ->willReturn(1);
 
-        $x = new PaymentConversionService(
+        $test = new PaymentConversionService(
             $cardDetailsProvider,
             $countryCodeValidator,
             $currencyProvider
         );
 
-        $result = $x->calculateTotalCommission($paymentData);
-        $this->assertEquals(1.0, $result); // 100 * 0.01 = 1
+        $result = $test->calculateTotalCommission($paymentData);
+        $this->assertEquals(1.0, $result);
     }
 
-    public function testXCalculatesAmountForEuropeanPaymentInNonEuroCurrency()
+    public function testCalculatesAmountForEuropeanPaymentInNonEuroCurrency()
     {
         $paymentData = (object)[
             'bin' => '45717360',
@@ -71,17 +71,17 @@ class PaymentConversionServiceTest extends TestCase
             ->with('USD')
             ->willReturn(1.09);
 
-        $x = new PaymentConversionService(
+        $test = new PaymentConversionService(
             $cardDetailsProvider,
             $countryCodeValidator,
             $currencyProvider
         );
 
-        $result = $x->calculateTotalCommission($paymentData);
+        $result = $test->calculateTotalCommission($paymentData);
         $this->assertEquals(0.09, $result);
     }
 
-    public function testXCalculatesAmountForNonEuropeanPaymentInEuroCurrency()
+    public function testCalculatesAmountForNonEuropeanPaymentInEuroCurrency()
     {
         $paymentData = (object)[
             'bin' => '516793',
@@ -106,17 +106,17 @@ class PaymentConversionServiceTest extends TestCase
             ->with('EUR')
             ->willReturn(1);
 
-        $x = new PaymentConversionService(
+        $test = new PaymentConversionService(
             $cardDetailsProvider,
             $countryCodeValidator,
             $currencyProvider
         );
-        $result = $x->calculateTotalCommission($paymentData);
+        $result = $test->calculateTotalCommission($paymentData);
         $this->assertEquals(0.25, $result);
     }
 
 
-    public function testXCalculatesAmountForNonEuropeanPaymentInNonEuroCurrency()
+    public function testCalculatesAmountForNonEuropeanPaymentInNonEuroCurrency()
     {
         $paymentData = (object)[
             'bin' => '516793',
@@ -141,16 +141,16 @@ class PaymentConversionServiceTest extends TestCase
             ->with('JPY')
             ->willReturn(160.438587);
 
-        $x = new PaymentConversionService(
+        $test = new PaymentConversionService(
             $cardDetailsProvider,
             $countryCodeValidator,
             $currencyProvider
         );
-        $result = $x->calculateTotalCommission($paymentData);
+        $result = $test->calculateTotalCommission($paymentData);
         $this->assertEquals(1.25, $result);
     }
 
-    public function testXHandlesMissingCountryCode()
+    public function testHandlesMissingCountryCode()
     {
         $paymentData = (object)[
             'bin' => '123456',
@@ -168,15 +168,15 @@ class PaymentConversionServiceTest extends TestCase
 
         $this->expectExceptionMessage('Payment Card Provider response error!');
 
-        $x = new PaymentConversionService(
+        $test = new PaymentConversionService(
             $cardDetailsProvider,
             $countryCodeValidator,
             $currencyProvider
         );
-        $x->calculateTotalCommission($paymentData);
+        $test->calculateTotalCommission($paymentData);
     }
 
-    public function testXHandlesMissingCurrencyRate()
+    public function testHandlesMissingCurrencyRate()
     {
         $paymentData = (object)[
             'bin' => '123456',
@@ -203,11 +203,11 @@ class PaymentConversionServiceTest extends TestCase
 
         $this->expectExceptionMessage('Currency API Provider response error!');
 
-        $x = new PaymentConversionService(
+        $test = new PaymentConversionService(
             $cardDetailsProvider,
             $countryCodeValidator,
             $currencyProvider
         );
-        $x->calculateTotalCommission($paymentData);
+        $test->calculateTotalCommission($paymentData);
     }
 }
