@@ -2,7 +2,7 @@
 
 1. Run the command in project folder:
 ```bash
-composer dump-autoload
+composer install
 ```
 
 2. Prepare your API key from ExchangeRateAPI platform.
