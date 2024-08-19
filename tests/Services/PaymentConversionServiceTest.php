@@ -34,7 +34,7 @@ class PaymentConversionServiceTest extends TestCase
         $currencyProvider
             ->method('getCurrency')
             ->with('EUR')
-            ->willReturn(1);
+            ->willReturn(1.0);
 
         $test = new PaymentConversionService(
             $cardDetailsProvider,
@@ -104,7 +104,7 @@ class PaymentConversionServiceTest extends TestCase
         $currencyProvider
             ->method('getCurrency')
             ->with('EUR')
-            ->willReturn(1);
+            ->willReturn(1.0);
 
         $test = new PaymentConversionService(
             $cardDetailsProvider,
@@ -161,7 +161,7 @@ class PaymentConversionServiceTest extends TestCase
         $cardDetailsProvider = $this->createMock(PaymentCardDetailsProviderInterface::class);
         $cardDetailsProvider
             ->method('getCountryCodeByBIN')
-            ->willReturn(null);
+            ->willReturn('');
 
         $countryCodeValidator = $this->createMock(CountryCodeValidator::class);
         $currencyProvider = $this->createMock(CurrencyProviderInterface::class);
@@ -199,7 +199,7 @@ class PaymentConversionServiceTest extends TestCase
         $currencyProvider
             ->method('getCurrency')
             ->with('USD')
-            ->willReturn(0);
+            ->willReturn(0.0);
 
         $this->expectExceptionMessage('Currency API Provider response error!');
 
