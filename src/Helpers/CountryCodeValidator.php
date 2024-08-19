@@ -34,7 +34,7 @@ class CountryCodeValidator
         'SK',
     ];
 
-    public function europeanCountryCodechecker($countryCode)
+    public function europeanCountryCodechecker(string $countryCode): bool
     {
         return in_array($countryCode, $this->europeanCoutryCodes);
     }

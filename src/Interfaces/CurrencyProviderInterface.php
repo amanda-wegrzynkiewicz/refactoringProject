@@ -4,5 +4,5 @@ namespace App\Interfaces;
 
 interface CurrencyProviderInterface 
 {
-    public function getCurrency ($baseCurrency);
+    public function getCurrency (string $baseCurrency): float;
 }

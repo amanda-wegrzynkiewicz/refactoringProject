@@ -14,11 +14,11 @@ class PaymentConversionService
         private CurrencyProviderInterface $currencyProvider,
     ) { }
 
-    public function calculateTotalCommission($paymentData): float
+    public function calculateTotalCommission(object $paymentData): float
     {
         $paymentCountryCode = $this->cardDetailsProvider->getCountryCodeByBIN($paymentData->bin);
         
-        if (!$paymentCountryCode) {
+        if (empty($paymentCountryCode)) {
             throw new \Exception("Payment Card Provider response error!");
         }
         

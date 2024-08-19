@@ -10,13 +10,13 @@ class CurrencyProvider implements CurrencyProviderInterface
     private $apiKey;
     private $apiLink;
 
-    function __construct($apiKey)
+    function __construct(string $apiKey)
     {
         $this->apiKey = $apiKey;
         $this->apiLink = self::API_LINK . '?access_key=' . $this->apiKey;
     }
 
-    public function getCurrency($baseCurrency)
+    public function getCurrency(string $baseCurrency): float
     {
         $currencyDataResponse = $this->getCurrencyData();
         return $currencyDataResponse['rates'][$baseCurrency];

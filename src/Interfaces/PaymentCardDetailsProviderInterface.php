@@ -4,5 +4,5 @@ namespace App\Interfaces;
 
 interface PaymentCardDetailsProviderInterface
 {
-    function getCountryCodeByBIN($bin);
+    function getCountryCodeByBIN(string $bin): string;
 }

@@ -8,12 +8,12 @@ class LookupApiProvider implements PaymentCardDetailsProviderInterface
 {
     const LINK = 'https://lookup.binlist.net/';
 
-    public function getCountryCodeByBIN($bin)
+    public function getCountryCodeByBIN(string $bin): string
     {
-        return $this->getCardDetailsData($bin)->country->alpha2 ?? NULL;
+        return $this->getCardDetailsData($bin)->country->alpha2 ?? '';
     }
 
-    private function getCardDetailsData($bin)
+    private function getCardDetailsData(string $bin): object
     {
         $cardDetailsData = json_decode(file_get_contents(self::LINK . $bin));
         return $cardDetailsData ?? NULL;
