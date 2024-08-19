@@ -18,7 +18,7 @@ class PaymentConversionService
     {
         $paymentCountryCode = $this->cardDetailsProvider->getCountryCodeByBIN($paymentData->bin);
         
-        if (empty($paymentCountryCode)) {
+        if (!$paymentCountryCode) {
             throw new \Exception("Payment Card Provider response error!");
         }
         

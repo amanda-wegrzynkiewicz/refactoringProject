@@ -22,7 +22,7 @@ class CurrencyProvider implements CurrencyProviderInterface
         return $currencyDataResponse['rates'][$baseCurrency];
     }
 
-    private function getCurrencyData()
+    private function getCurrencyData(): array
     {
         return json_decode(file_get_contents($this->apiLink), true);
     }
