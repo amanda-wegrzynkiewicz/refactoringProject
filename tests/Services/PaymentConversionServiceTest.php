@@ -161,7 +161,7 @@ class PaymentConversionServiceTest extends TestCase
         $cardDetailsProvider = $this->createMock(PaymentCardDetailsProviderInterface::class);
         $cardDetailsProvider
             ->method('getCountryCodeByBIN')
-            ->willReturn('');
+            ->willReturn(null);
 
         $countryCodeValidator = $this->createMock(CountryCodeValidator::class);
         $currencyProvider = $this->createMock(CurrencyProviderInterface::class);
