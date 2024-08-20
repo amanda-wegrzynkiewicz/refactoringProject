@@ -16,17 +16,17 @@ class FileBasedCommissionsCalculatorService
 
     public function getCommissions()
     {
-        $fileExtractedData = $this->getFilesData();
-        
-        foreach ($fileExtractedData as $paymentData) {
+        foreach ($this->getFilesData() as $paymentData) {
             $paymentData = json_decode($paymentData);
             $commissionAmountSummary = $this->paymentConversionService->calculateTotalCommission($paymentData);
             echo "The commission for bin { $paymentData->bin } is: { $commissionAmountSummary }\n";
         }
     }
 
-    private function getFilesData(): array
+    private function getFilesData(): array|null
     {
-        return $this->fileReader->getLines() ?? [];
+        $fileExtractedData = $this->fileReader->getLines() ?? null;
+        if (!$fileExtractedData) throw new \Exception('There is no proper data in file');
+        return $fileExtractedData;
     }
 }
