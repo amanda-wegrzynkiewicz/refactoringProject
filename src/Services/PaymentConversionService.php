@@ -17,11 +17,7 @@ class PaymentConversionService
     public function calculateTotalCommission(object $paymentData): float
     {
         $this->cardDetailsProvider->setPaymentBIN($paymentData->bin);
-        $paymentCountryCode = $this->cardDetailsProvider->getCountryCode();
-
-        if (!$paymentCountryCode) {
-            throw new \Exception("Payment Card Provider response error!");
-        }
+        $paymentCountryCode = $this->cardDetailsProvider->getCountryCode() ?? throw new \Exception("Payment Card Provider response error!");
 
         $isEuropeanPayment = $this->countryCodeValidator->europeanCountryCodechecker($paymentCountryCode);
         $currencyRate = $this->currencyProvider->getExchangeRates($paymentData->currency);
