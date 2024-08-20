@@ -7,14 +7,11 @@ use App\Services\PaymentConversionService;
 
 class FileBasedCommissionsCalculatorService
 {
-    private $fileReader;
-    private $paymentConvertionService;
-
-    public function __construct(FileReader $fileReader, PaymentConversionService $paymentConversionService)
+    public function __construct(private FileReader $fileReader, private PaymentConversionService $paymentConversionService)
     {
 
         $this->fileReader = $fileReader;
-        $this->paymentConvertionService = $paymentConversionService;
+        $this->paymentConversionService = $paymentConversionService;
     }
 
     public function getCommissions()
@@ -23,7 +20,7 @@ class FileBasedCommissionsCalculatorService
         
         foreach ($fileExtractedData as $paymentData) {
             $paymentData = json_decode($paymentData);
-            $commissionAmountSummary = $this->paymentConvertionService->calculateTotalCommission($paymentData);
+            $commissionAmountSummary = $this->paymentConversionService->calculateTotalCommission($paymentData);
             echo "The commission for bin { $paymentData->bin } is: { $commissionAmountSummary }\n";
         }
     }
