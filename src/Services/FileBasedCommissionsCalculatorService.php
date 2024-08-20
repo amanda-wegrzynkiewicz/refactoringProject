@@ -19,7 +19,9 @@ class FileBasedCommissionsCalculatorService
 
     public function getCommissions()
     {
-        foreach ($this->getFilesData() as $paymentData) {
+        $fileExtractedData = $this->getFilesData();
+        
+        foreach ($fileExtractedData as $paymentData) {
             $paymentData = json_decode($paymentData);
             $commissionAmountSummary = $this->paymentConvertionService->calculateTotalCommission($paymentData);
             echo "The commission for bin { $paymentData->bin } is: { $commissionAmountSummary }\n";

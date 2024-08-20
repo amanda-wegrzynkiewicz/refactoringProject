@@ -21,7 +21,7 @@ class PaymentConversionServiceTest extends TestCase
 
         $cardDetailsProvider = $this->createMock(PaymentCardDetailsProviderInterface::class);
         $cardDetailsProvider
-            ->method('getCountryCodeByBIN')
+            ->method('getCountryCode')
             ->willReturn('DK');
 
         $countryCodeValidator = $this->createMock(CountryCodeValidator::class);
@@ -56,7 +56,7 @@ class PaymentConversionServiceTest extends TestCase
 
         $cardDetailsProvider = $this->createMock(PaymentCardDetailsProviderInterface::class);
         $cardDetailsProvider
-            ->method('getCountryCodeByBIN')
+            ->method('getCountryCode')
             ->willReturn('PO');
 
         $countryCodeValidator = $this->createMock(CountryCodeValidator::class);
@@ -91,7 +91,7 @@ class PaymentConversionServiceTest extends TestCase
 
         $cardDetailsProvider = $this->createMock(PaymentCardDetailsProviderInterface::class);
         $cardDetailsProvider
-            ->method('getCountryCodeByBIN')
+            ->method('getCountryCode')
             ->willReturn('JPY');
 
         $countryCodeValidator = $this->createMock(CountryCodeValidator::class);
@@ -126,7 +126,7 @@ class PaymentConversionServiceTest extends TestCase
 
         $cardDetailsProvider = $this->createMock(PaymentCardDetailsProviderInterface::class);
         $cardDetailsProvider
-            ->method('getCountryCodeByBIN')
+            ->method('getCountryCode')
             ->willReturn('JP');
 
         $countryCodeValidator = $this->createMock(CountryCodeValidator::class);
@@ -160,7 +160,7 @@ class PaymentConversionServiceTest extends TestCase
 
         $cardDetailsProvider = $this->createMock(PaymentCardDetailsProviderInterface::class);
         $cardDetailsProvider
-            ->method('getCountryCodeByBIN')
+            ->method('getCountryCode')
             ->willReturn(null);
 
         $countryCodeValidator = $this->createMock(CountryCodeValidator::class);
@@ -186,7 +186,7 @@ class PaymentConversionServiceTest extends TestCase
 
         $cardDetailsProvider = $this->createMock(PaymentCardDetailsProviderInterface::class);
         $cardDetailsProvider
-            ->method('getCountryCodeByBIN')
+            ->method('getCountryCode')
             ->willReturn('US');
 
         $countryCodeValidator = $this->createMock(CountryCodeValidator::class);

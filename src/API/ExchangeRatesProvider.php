@@ -21,11 +21,11 @@ class ExchangeRatesProvider implements ExchangeRatesProviderInterface
 
     public function getExchangeRates(string $baseCurrency): float
     {
-        $currencyDataResponse = $this->getCurrencyData();
+        $currencyDataResponse = $this->getExternalExchangeRates();
         return $currencyDataResponse['rates'][$baseCurrency];
     }
 
-    private function getCurrencyData(): array
+    private function getExternalExchangeRates(): array
     {
         return json_decode(file_get_contents($this->apiLink), true);
     }
