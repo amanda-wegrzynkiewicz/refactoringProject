@@ -6,7 +6,7 @@ use App\Interfaces\PaymentCardDetailsProviderInterface;
 
 class LookupApiProvider implements PaymentCardDetailsProviderInterface
 {
-    const LINK = 'https://lookup.binlist.net/';
+    private const LOOKUP_URL = 'https://lookup.binlist.net/';
 
     public function getCountryCodeByBIN(string $bin): ?string
     {
@@ -15,7 +15,7 @@ class LookupApiProvider implements PaymentCardDetailsProviderInterface
 
     private function getCardDetailsData(string $bin): ?object
     {
-        $cardDetailsData = json_decode(file_get_contents(self::LINK . $bin));
+        $cardDetailsData = json_decode(file_get_contents(self::LOOKUP_URL . $bin));
         return $cardDetailsData ?? NULL;
     }
 }

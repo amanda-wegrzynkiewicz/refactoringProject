@@ -2,9 +2,9 @@
 
 namespace App\API;
 
-use App\Interfaces\CurrencyProviderInterface;
+use App\Interfaces\ExchangeRatesProviderInterface;
 
-class CurrencyProvider implements CurrencyProviderInterface
+class ExchangeRatesProvider implements ExchangeRatesProviderInterface
 {
     const API_LINK = 'http://api.exchangeratesapi.io/latest';
     private $apiKey;
@@ -19,7 +19,7 @@ class CurrencyProvider implements CurrencyProviderInterface
         $this->apiLink = self::API_LINK . '?access_key=' . $this->apiKey;
     }
 
-    public function getCurrency(string $baseCurrency): float
+    public function getExchangeRates(string $baseCurrency): float
     {
         $currencyDataResponse = $this->getCurrencyData();
         return $currencyDataResponse['rates'][$baseCurrency];

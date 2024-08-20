@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Helpers\CountryCodeValidator;
-use App\Interfaces\CurrencyProviderInterface;
+use App\Interfaces\ExchangeRatesProviderInterface;
 use App\Interfaces\PaymentCardDetailsProviderInterface;
 
 class PaymentConversionService
@@ -11,7 +11,7 @@ class PaymentConversionService
     public function __construct(
         private CountryCodeValidator $countryCodeValidator,
         private PaymentCardDetailsProviderInterface $cardDetailsProvider,
-        private CurrencyProviderInterface $currencyProvider,
+        private ExchangeRatesProviderInterface $currencyProvider,
     ) {}
 
     public function calculateTotalCommission(object $paymentData): float
@@ -23,7 +23,7 @@ class PaymentConversionService
         }
 
         $isEuropeanPayment = $this->countryCodeValidator->europeanCountryCodechecker($paymentCountryCode);
-        $currencyRate = $this->currencyProvider->getCurrency($paymentData->currency);
+        $currencyRate = $this->currencyProvider->getExchangeRates($paymentData->currency);
 
         if (!$currencyRate || $currencyRate < 0) {
             throw new \Exception("Currency API Provider response error!");

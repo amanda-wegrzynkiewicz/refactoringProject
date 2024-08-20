@@ -4,7 +4,7 @@ namespace App\Tests\Services;
 
 use PHPUnit\Framework\TestCase;
 
-use App\Interfaces\CurrencyProviderInterface;
+use App\Interfaces\ExchangeRatesProviderInterface;
 use App\Interfaces\PaymentCardDetailsProviderInterface;
 use App\Helpers\CountryCodeValidator;
 use App\Services\PaymentConversionService;
@@ -30,15 +30,15 @@ class PaymentConversionServiceTest extends TestCase
             ->with('DK')
             ->willReturn(true);
 
-        $currencyProvider = $this->createMock(CurrencyProviderInterface::class);
+        $currencyProvider = $this->createMock(ExchangeRatesProviderInterface::class);
         $currencyProvider
-            ->method('getCurrency')
+            ->method('getExchangeRates')
             ->with('EUR')
             ->willReturn(1.0);
 
         $test = new PaymentConversionService(
-            $cardDetailsProvider,
             $countryCodeValidator,
+            $cardDetailsProvider,
             $currencyProvider
         );
 
@@ -65,15 +65,15 @@ class PaymentConversionServiceTest extends TestCase
             ->with('PO')
             ->willReturn(true);
 
-        $currencyProvider = $this->createMock(CurrencyProviderInterface::class);
+        $currencyProvider = $this->createMock(ExchangeRatesProviderInterface::class);
         $currencyProvider
-            ->method('getCurrency')
+            ->method('getExchangeRates')
             ->with('USD')
             ->willReturn(1.09);
 
         $test = new PaymentConversionService(
-            $cardDetailsProvider,
             $countryCodeValidator,
+            $cardDetailsProvider,
             $currencyProvider
         );
 
@@ -100,15 +100,15 @@ class PaymentConversionServiceTest extends TestCase
             ->with('JPY')
             ->willReturn(false);
 
-        $currencyProvider = $this->createMock(CurrencyProviderInterface::class);
+        $currencyProvider = $this->createMock(ExchangeRatesProviderInterface::class);
         $currencyProvider
-            ->method('getCurrency')
+            ->method('getExchangeRates')
             ->with('EUR')
             ->willReturn(1.0);
 
         $test = new PaymentConversionService(
-            $cardDetailsProvider,
             $countryCodeValidator,
+            $cardDetailsProvider,
             $currencyProvider
         );
         $result = $test->calculateTotalCommission($paymentData);
@@ -135,15 +135,15 @@ class PaymentConversionServiceTest extends TestCase
             ->with('JP')
             ->willReturn(false);
 
-        $currencyProvider = $this->createMock(CurrencyProviderInterface::class);
+        $currencyProvider = $this->createMock(ExchangeRatesProviderInterface::class);
         $currencyProvider
-            ->method('getCurrency')
+            ->method('getExchangeRates')
             ->with('JPY')
             ->willReturn(160.438587);
 
         $test = new PaymentConversionService(
-            $cardDetailsProvider,
             $countryCodeValidator,
+            $cardDetailsProvider,
             $currencyProvider
         );
         $result = $test->calculateTotalCommission($paymentData);
@@ -164,13 +164,13 @@ class PaymentConversionServiceTest extends TestCase
             ->willReturn(null);
 
         $countryCodeValidator = $this->createMock(CountryCodeValidator::class);
-        $currencyProvider = $this->createMock(CurrencyProviderInterface::class);
+        $currencyProvider = $this->createMock(ExchangeRatesProviderInterface::class);
 
         $this->expectExceptionMessage('Payment Card Provider response error!');
 
         $test = new PaymentConversionService(
-            $cardDetailsProvider,
             $countryCodeValidator,
+            $cardDetailsProvider,
             $currencyProvider
         );
         $test->calculateTotalCommission($paymentData);
@@ -195,17 +195,17 @@ class PaymentConversionServiceTest extends TestCase
             ->with('US')
             ->willReturn(false);
 
-        $currencyProvider = $this->createMock(CurrencyProviderInterface::class);
+        $currencyProvider = $this->createMock(ExchangeRatesProviderInterface::class);
         $currencyProvider
-            ->method('getCurrency')
+            ->method('getExchangeRates')
             ->with('USD')
             ->willReturn(0.0);
 
         $this->expectExceptionMessage('Currency API Provider response error!');
 
         $test = new PaymentConversionService(
-            $cardDetailsProvider,
             $countryCodeValidator,
+            $cardDetailsProvider,
             $currencyProvider
         );
         $test->calculateTotalCommission($paymentData);

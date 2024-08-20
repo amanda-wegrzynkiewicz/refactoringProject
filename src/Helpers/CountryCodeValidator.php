@@ -4,7 +4,7 @@ namespace App\Helpers;
 
 class CountryCodeValidator
 {
-    public $europeanCoutryCodes = [
+    private $europeanCoutryCodes = [
         'AT',
         'BE',
         'BG',
