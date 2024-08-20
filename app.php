@@ -9,12 +9,14 @@ use App\Helpers\CountryCodeValidator;
 use App\API\CurrencyProvider;
 use App\API\LookupApiProvider;
 
-$filePath = $argv[1];
-
-$fileReader = new FileReader($filePath);
-$countryCodeValidator = new CountryCodeValidator;
-$lookupApiProvider = new LookupApiProvider;
-$currencyProvider = new CurrencyProvider;
-$paymentConversionService = new PaymentConversionService($countryCodeValidator, $lookupApiProvider, $currencyProvider);
-$FileBasedCommissionsCalculator = new FileBasedCommissionsCalculatorService($fileReader, $paymentConversionService);
-$FileBasedCommissionsCalculator->getCommissions();
+try {
+    $fileReader = new FileReader($argv[1]);
+    $countryCodeValidator = new CountryCodeValidator;
+    $lookupApiProvider = new LookupApiProvider;
+    $currencyProvider = new CurrencyProvider;
+    $paymentConversionService = new PaymentConversionService($countryCodeValidator, $lookupApiProvider, $currencyProvider);
+    $FileBasedCommissionsCalculator = new FileBasedCommissionsCalculatorService($fileReader, $paymentConversionService);
+    $FileBasedCommissionsCalculator->getCommissions();
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage() . PHP_EOL;
+}
