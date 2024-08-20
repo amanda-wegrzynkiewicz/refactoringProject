@@ -10,9 +10,12 @@ class CurrencyProvider implements CurrencyProviderInterface
     private $apiKey;
     private $apiLink;
 
-    function __construct(string $apiKey)
+    function __construct()
     {
-        $this->apiKey = $apiKey;
+        $this->apiKey = getenv('EXCHANGERATES_API_KEY') ?? NULL;
+        if (!$this->apiKey) {
+            throw new \Exception("Invalid ENV value EXCHANGERATES_API_KEY!");
+        }
         $this->apiLink = self::API_LINK . '?access_key=' . $this->apiKey;
     }
 

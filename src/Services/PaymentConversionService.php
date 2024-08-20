@@ -2,29 +2,29 @@
 
 namespace App\Services;
 
+use App\Helpers\CountryCodeValidator;
 use App\Interfaces\CurrencyProviderInterface;
 use App\Interfaces\PaymentCardDetailsProviderInterface;
-use App\Helpers\CountryCodeValidator;
 
 class PaymentConversionService
 {
     public function __construct(
-        private PaymentCardDetailsProviderInterface $cardDetailsProvider,
         private CountryCodeValidator $countryCodeValidator,
+        private PaymentCardDetailsProviderInterface $cardDetailsProvider,
         private CurrencyProviderInterface $currencyProvider,
-    ) { }
+    ) {}
 
     public function calculateTotalCommission(object $paymentData): float
     {
         $paymentCountryCode = $this->cardDetailsProvider->getCountryCodeByBIN($paymentData->bin);
-        
+
         if (!$paymentCountryCode) {
             throw new \Exception("Payment Card Provider response error!");
         }
-        
+
         $isEuropeanPayment = $this->countryCodeValidator->europeanCountryCodechecker($paymentCountryCode);
         $currencyRate = $this->currencyProvider->getCurrency($paymentData->currency);
-        
+
         if (!$currencyRate || $currencyRate < 0) {
             throw new \Exception("Currency API Provider response error!");
         }
@@ -39,4 +39,3 @@ class PaymentConversionService
         return (float)number_format($paymentAmountSummary, 2, '.', '');
     }
 }
-
