@@ -6,7 +6,7 @@ class FileReader
 {
     public $allowedExtensions = ['txt', 'json'];
 
-    public function __construct(private string $filePath)
+    public function __construct(public string $filePath)
     {
         $pathInfo = pathinfo($filePath);
         if (!in_array($pathInfo['extension'], $this->allowedExtensions)) {

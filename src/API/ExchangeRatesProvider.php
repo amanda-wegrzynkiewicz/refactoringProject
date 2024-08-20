@@ -12,10 +12,7 @@ class ExchangeRatesProvider implements ExchangeRatesProviderInterface
 
     function __construct()
     {
-        $this->apiKey = getenv('EXCHANGERATES_API_KEY') ?? NULL;
-        if (!$this->apiKey) {
-            throw new \Exception("Invalid ENV value EXCHANGERATES_API_KEY!");
-        }
+        $this->apiKey = getenv('EXCHANGERATES_API_KEY') ?? throw new \InvalidArgumentException("Invalid ENV value EXCHANGERATES_API_KEY!");
         $this->apiLink = self::API_LINK . '?access_key=' . $this->apiKey;
     }
 

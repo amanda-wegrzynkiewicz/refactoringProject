@@ -25,8 +25,6 @@ class FileBasedCommissionsCalculatorService
 
     private function getFilesData(): array|null
     {
-        $fileExtractedData = $this->fileReader->getLines() ?? null;
-        if (!$fileExtractedData) throw new \Exception('There is no proper data in file');
-        return $fileExtractedData;
+        return $this->fileReader->getLines() ?? throw new \Exception('There is no proper data in file');
     }
 }
