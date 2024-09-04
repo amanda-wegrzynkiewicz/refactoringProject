@@ -2,7 +2,8 @@
 
 namespace App\Interfaces;
 
+use App\Dto\ExchangeRatesProviderDto;
 interface ExchangeRatesProviderInterface 
 {
-    public function getExchangeRates (string $baseCurrency): float;
+    public function getExchangeRateByCurrency(string $currency): ExchangeRatesProviderDto;
 }

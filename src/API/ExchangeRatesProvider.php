@@ -3,6 +3,7 @@
 namespace App\API;
 
 use App\Interfaces\ExchangeRatesProviderInterface;
+use App\Dto\ExchangeRatesProviderDto;
 
 class ExchangeRatesProvider implements ExchangeRatesProviderInterface
 {
@@ -10,20 +11,16 @@ class ExchangeRatesProvider implements ExchangeRatesProviderInterface
     private $apiKey;
     private $apiLink;
 
-    function __construct()
+    public function __construct()
     {
         $this->apiKey = getenv('EXCHANGERATES_API_KEY') ?? throw new \InvalidArgumentException("Invalid ENV value EXCHANGERATES_API_KEY!");
         $this->apiLink = self::API_LINK . '?access_key=' . $this->apiKey;
     }
 
-    public function getExchangeRates(string $baseCurrency): float
+    public function getExchangeRateByCurrency(string $currency): ExchangeRatesProviderDto
     {
-        $currencyDataResponse = $this->getExternalExchangeRates();
-        return $currencyDataResponse['rates'][$baseCurrency];
-    }
-
-    private function getExternalExchangeRates(): array
-    {
-        return json_decode(file_get_contents($this->apiLink), true);
+        $currencyDataResponse = json_decode(file_get_contents($this->apiLink), true);
+        $rate = $currencyDataResponse['rates'][$currency] ?? throw new \InvalidArgumentException("There is no given currency on currencies list");
+        return new ExchangeRatesProviderDto($currency, $rate);
     }
 }
